@@ -17,8 +17,23 @@
  * limitations under the License.
  * #L%
  */
+package io.wcm.config.spi;
+
+import java.util.Set;
+
+import org.osgi.annotation.versioning.ConsumerType;
+
+import io.wcm.config.api.Parameter;
+
 /**
- * API for applications and editors managing configuration (read/write).
+ * Allows application to provide the necessary meta data for configuration.
  */
-@org.osgi.annotation.versioning.Version("1.0.0")
-package io.wcm.config.core.management;
+@ConsumerType
+public interface ParameterProvider {
+
+  /**
+   * @return Parameters that the application defines
+   */
+  Set<Parameter<?>> getParameters();
+
+}

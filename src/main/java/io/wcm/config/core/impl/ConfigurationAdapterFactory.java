@@ -31,8 +31,6 @@ import org.apache.sling.api.adapter.AdapterFactory;
 import org.apache.sling.api.resource.Resource;
 
 import io.wcm.config.api.Configuration;
-import io.wcm.config.core.management.Application;
-import io.wcm.config.core.management.ApplicationFinder;
 import io.wcm.config.core.management.ConfigurationFinder;
 
 /**
@@ -46,8 +44,7 @@ import io.wcm.config.core.management.ConfigurationFinder;
       "org.apache.sling.api.resource.Resource"
   }),
   @Property(name = ADAPTER_CLASSES, value = {
-      "io.wcm.config.api.Configuration",
-      "io.wcm.config.core.management.Application"
+        "io.wcm.config.api.Configuration"
   }),
   @Property(name = "adapter.condition", value = "If a configuration can be found for the current/given resource or it's parents.")
 })
@@ -55,8 +52,6 @@ public final class ConfigurationAdapterFactory implements AdapterFactory {
 
   @Reference
   private ConfigurationFinder configurationFinder;
-  @Reference
-  private ApplicationFinder applicationFinder;
 
   @SuppressWarnings("unchecked")
   @Override
@@ -65,12 +60,6 @@ public final class ConfigurationAdapterFactory implements AdapterFactory {
       Resource resource = AdaptableUtil.getResource(adaptable);
       if (resource != null) {
         return (AdapterType)configurationFinder.find(resource);
-      }
-    }
-    else if (type == Application.class) {
-      Resource resource = AdaptableUtil.getResource(adaptable);
-      if (resource != null) {
-        return (AdapterType)applicationFinder.find(resource);
       }
     }
     return null;

@@ -18,7 +18,7 @@
  * #L%
  */
 /**
- * API for applications and editors managing configuration (read/write).
+ * SPI for applications hooking into the configuration infrastructure for parameterizing and customizing.
  */
 @org.osgi.annotation.versioning.Version("1.0.0")
-package io.wcm.config.core.management;
+package io.wcm.config.spi;

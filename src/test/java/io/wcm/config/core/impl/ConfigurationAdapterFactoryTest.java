@@ -33,14 +33,11 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import io.wcm.config.api.Configuration;
-import io.wcm.config.core.management.Application;
-import io.wcm.config.core.management.ApplicationFinder;
 import io.wcm.config.core.management.ConfigurationFinder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConfigurationAdapterFactoryTest {
 
-  private Application application;
   @Mock
   private Resource resource;
   @Mock
@@ -49,18 +46,14 @@ public class ConfigurationAdapterFactoryTest {
   private Configuration configuration;
   @Mock
   private ConfigurationFinder configurationFinder;
-  @Mock
-  private ApplicationFinder applicationFinder;
 
   @InjectMocks
   private ConfigurationAdapterFactory underTest;
 
   @Before
   public void setUp() {
-    application = new Application("app1", null);
     when(request.getResource()).thenReturn(resource);
     when(configurationFinder.find(resource)).thenReturn(configuration);
-    when(applicationFinder.find(resource)).thenReturn(application);
   }
 
   @Test
@@ -81,26 +74,6 @@ public class ConfigurationAdapterFactoryTest {
   @Test
   public void testConfigurationInvalid() {
     assertNull(underTest.getAdapter(this, Configuration.class));
-  }
-
-  @Test
-  public void testApplicationResource() {
-    assertSame(application, underTest.getAdapter(resource, Application.class));
-    assertNull(underTest.getAdapter(resource, ApplicationFinder.class));
-    assertNull(underTest.getAdapter(this, Application.class));
-  }
-
-  @Test
-  public void testApplicationRequest() {
-    assertSame(application, underTest.getAdapter(request, Application.class));
-
-    when(request.getResource()).thenReturn(null);
-    assertNull(underTest.getAdapter(request, Application.class));
-  }
-
-  @Test
-  public void testApplicationInvalid() {
-    assertNull(underTest.getAdapter(this, Application.class));
   }
 
 }
